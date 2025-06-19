@@ -24,15 +24,15 @@ export class TokenService {
     if (!foundToken.isValid())
       throw new BadRequestException('Token expired or already used');
 
-    const user = await this.userModel.findByPk(foundToken.userId);
+    const user = await this.userModel.findOne({where: { username: foundToken.userId }});
     if (!user) throw new BadRequestException('User not found');
 
-    user.password = newPassword;
+    user.set('password',newPassword);
     await user.save();
     await foundToken.useToken();
   }
 
-  async generateToken(userId: number, generatedBy: number): Promise<string> {
+  async generateToken(userId: string, generatedBy: number): Promise<string> {
     const user = await this.userModel.findOne({ where: { username: userId } });
     if (!user) throw new BadRequestException('User not found');
 

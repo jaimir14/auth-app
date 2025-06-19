@@ -6,15 +6,15 @@ module.exports = {
       id: {
         type: Sequelize.DOUBLE,
         autoIncrement: true,
-        primaryKey: true
+        primaryKey: true,
       },
       value: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
       generatedBy: {
-          type: Sequelize.DOUBLE,
-          allowNull: false,
+        type: Sequelize.DOUBLE,
+        allowNull: false,
       },
       userId: {
         type: Sequelize.STRING,
@@ -22,26 +22,26 @@ module.exports = {
       },
       active: {
         type: Sequelize.BOOLEAN,
-        defaultValue: true
+        defaultValue: true,
       },
       expirationDate: {
         type: Sequelize.DATE,
       },
       created: {
         type: Sequelize.DATE,
-        allowNull: false
+        allowNull: false,
       },
       modified: {
         type: Sequelize.DATE,
-        allowNull: true
+        allowNull: true,
       },
       deleted: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
     });
   },
 
   async down(queryInterface, Sequelize) {
     queryInterface.dropTable('tokens');
-  }
+  },
 };

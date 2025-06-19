@@ -25,7 +25,7 @@ export class TokenController {
 
   @Post(':userId')
   async generateToken(
-    @Param('userId') userId: number,
+    @Param('userId') userId: string,
     @Body('generatedBy') generatedBy: number,
   ) {
     const value = await this.tokenService.generateToken(userId, generatedBy);

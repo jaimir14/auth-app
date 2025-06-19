@@ -8,7 +8,6 @@ import {
   AllowNull,
   Default,
   BeforeCreate,
-  BeforeSave,
   BeforeValidate,
 } from 'sequelize-typescript';
 import * as crypto from 'crypto';
@@ -27,7 +26,7 @@ export default class Token extends Model {
   @Column(DataType.DOUBLE)
   declare id: number;
 
-  @AllowNull(false)
+  @AllowNull(true)
   @Column(DataType.STRING)
   declare value: string;
 
@@ -46,11 +45,11 @@ export default class Token extends Model {
   @Column(DataType.DATE)
   declare expirationDate: Date;
 
-  @BeforeValidate
+  @BeforeCreate
   static generateTokenValueAndExpiry(instance: Token) {
-    console.log('-----------------------------------------------------');
-    instance.value = crypto.randomBytes(16).toString('hex');
-    instance.expirationDate = Token.addHours(24);
+    const token = crypto.randomBytes(16).toString('hex');
+    instance.set('value', token);
+    instance.set('expirationDate', Token.addHours(24));
     console.log('🧪 Token generated:', instance.value);
   }
 
